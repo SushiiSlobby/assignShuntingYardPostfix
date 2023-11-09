@@ -168,17 +168,12 @@ TreeNodeClass* ConstructBET(string postFixStr) {
         {
             // parse stack nodes into a new subtree as children
             // Save/Add this sub tree node to the stack
-            while(!parseStack.empty() && OperatorMapObj.isOperator(parseStack.top()->value)){
-                TreeNodeClass* operatorNode = parseStack.top();
-                parseStack.pop();
+            newNodePtr->right = parseStack.top();
+            parseStack.pop();
+            newNodePtr->left = parseStack.top();
+            parseStack.pop();
 
-                operatorNode->right = parseStack.top();
-                parseStack.pop();
-                operatorNode->left  = parseStack.top();
-                parseStack.pop();
-
-                parseStack.push(operatorNode);
-            }
+            parseStack.push(newNodePtr);
         }
         // not operator
         else {
@@ -189,7 +184,7 @@ TreeNodeClass* ConstructBET(string postFixStr) {
 
     //  Place formed root node on the stack into tree
 
-    return parseStack.top();
+    return parseStack.empty() ? nullptr : parseStack.top();
 }
 
 string buildString;
@@ -221,7 +216,6 @@ void inorder(TreeNodeClass* treeNode) {
     if (treeNode) {
         // xxx check if parens required pass arguments treeNode->left, treeNode->value
         // go left
-
         // add value to build string
         // xxx check if parens required pass arguments treeNode->right, treeNode->value
         // go right
