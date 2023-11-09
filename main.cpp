@@ -23,6 +23,8 @@ public:
     OperatorMapClass() {
         operatorMapObj.insert(OperatorPrecedenceMapType::value_type('+', 1));
         operatorMapObj.insert(OperatorPrecedenceMapType::value_type('-', 1));
+        operatorMapObj.insert(OperatorPrecedenceMapType::value_type('*', 2));
+        operatorMapObj.insert(OperatorPrecedenceMapType::value_type('/', 2));
         // xxx insert code here to insert * and / in the map object
     }//OperatorMapClass ()
 
@@ -34,7 +36,8 @@ public:
 
     bool  isOperator(char token) {
         // xxx check if token operator Map Object is 0 or not to return true or false
-        return true; // dummy return
+        return operatorMapObj.at(token) != 0;
+        //return true; // dummy return
 
     }//isOperator()
 
@@ -50,10 +53,10 @@ public:
 
         string       outputString;
         stack <char> operatorStackObj;
-
+        outputString = "";
         for (char token : infixString) {
             switch (token) {
-                case '/': case '*': case '+': case '-':
+                case '/':case '*':case '+':case '-':
                     // xxx insert code here
                     /*
 
@@ -70,10 +73,16 @@ public:
 
                        Push the current operator token onto the stack
                     */
+                    while(!operatorStackObj.empty() && operatorStackObj.top() != '(' && operatorMapObj.isStackOperatorHigherPrecedence(token, operatorStackObj.top())) {
+                        outputString += operatorStackObj.top();
+                        operatorStackObj.pop();
+                    }
+                    operatorStackObj.push(token);
                     break;
                 case '(':                                                       // left parenthesis
                     // xxx insert code here
                     // push this token on the stack
+                    operatorStackObj.push(token);
                     break;
                 case ')':
                     // xxx insert code here                                                      // right parenthesis
@@ -86,10 +95,17 @@ public:
 
                     Pop the left parenthesis from the stack and discard it
                     */
+                    while(!operatorStackObj.empty() && operatorStackObj.top() != '(') {
+                        outputString += operatorStackObj.top();
+                        operatorStackObj.pop();
+                    }
+                    operatorStackObj.pop();
                     break;
                 default:                                                        // operand
                     // xxx insert code here
                     // push back the operand symbol to the output string
+                    outputString += operatorStackObj.top();
+                    operatorStackObj.pop();
                     break;
             }//switch
         }//for
@@ -101,6 +117,10 @@ public:
            //Push back any remaining stack tokens to the output string
         }//while-end
         */
+        while(!operatorStackObj.empty()){
+            outputString += operatorStackObj.top();
+            operatorStackObj.pop();
+        }
         return(outputString);
 
     }//postfix()
