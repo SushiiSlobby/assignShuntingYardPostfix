@@ -36,7 +36,7 @@ public:
 
     bool  isOperator(char token) {
         // xxx check if token operator Map Object is 0 or not to return true or false
-        return operatorMapObj.at(token) != 0;
+        return operatorMapObj.find(token) != operatorMapObj.end();
         //return true; // dummy return
 
     }//isOperator()
@@ -132,7 +132,7 @@ class TreeNodeClass {
 
 public:
     TreeNodeClass* left;
-    char            value;
+    char           value;
     TreeNodeClass* right;
 
 };//TreeNodeClass
@@ -142,8 +142,12 @@ TreeNodeClass* BuildNewNodeObjPtrMethod(char value) {
     // xxx new a new TreeNodeClass pointer
     // set value in new node and left and right pointers
     // return new node pointer
+    auto* Node = new TreeNodeClass;
+    Node->value = value;
+    Node->left = nullptr;
+    Node->right = nullptr;
 
-    return nullptr; // dummy return
+    return Node;
 };
 
 
@@ -154,32 +158,50 @@ TreeNodeClass* ConstructBET(string postFixStr) {
 
     // xxx must develop code here
     // Process each character of the post-fix expression into token
-    char token=' ';
+    //char token=' ';
+    for (char token : postFixStr)
     {
         // Form a new node pointer
         newNodePtr = BuildNewNodeObjPtrMethod(token);
         // check if an operator
+        if(OperatorMapObj.isOperator(newNodePtr->value))
         {
             // parse stack nodes into a new subtree as children
             // Save/Add this sub tree node to the stack
+            while(!parseStack.empty() && OperatorMapObj.isOperator(parseStack.top()->value)){
+                TreeNodeClass* operatorNode = parseStack.top();
+                parseStack.pop();
+
+                operatorNode->right = parseStack.top();
+                parseStack.pop();
+                operatorNode->left  = parseStack.top();
+                parseStack.pop();
+
+                parseStack.push(operatorNode);
+            }
         }
         // not operator
-        {
+        else {
             // operand, push node onto stack
-
+            parseStack.push(newNodePtr);
         }
     }
 
     //  Place formed root node on the stack into tree
 
-    return newNodePtr;
+    return parseStack.top();
 }
 
 string buildString;
 
 void preorder(TreeNodeClass* treeNode) {
     //xxx do pre order transversal to build string
+    if(treeNode == nullptr)
+        return;
+
     buildString += treeNode->value;
+    preorder(treeNode->left);
+    preorder(treeNode->right);
 }
 
 bool areParensRequired(TreeNodeClass* treeNode, char value) {
@@ -204,13 +226,17 @@ void inorder(TreeNodeClass* treeNode) {
         // xxx check if parens required pass arguments treeNode->right, treeNode->value
         // go right
         // check if parens required
-        //add ) to buildString
+        // add ) to buildString
 
     }//if
 }
 
 void postorder(TreeNodeClass* treeNode) {
     //xxx do post order transversal to build string
+    if(treeNode == nullptr)
+        return;
+    postorder(treeNode->left);
+    postorder(treeNode->right);
     buildString += treeNode->value;
 
 }
