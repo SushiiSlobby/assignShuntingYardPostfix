@@ -104,8 +104,7 @@ public:
                 default:                                                        // operand
                     // xxx insert code here
                     // push back the operand symbol to the output string
-                    outputString += operatorStackObj.top();
-                    operatorStackObj.pop();
+                    outputString += token;
                     break;
             }//switch
         }//for
