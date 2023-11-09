@@ -204,7 +204,7 @@ bool areParensRequired(TreeNodeClass* treeNode, char value) {
     if (operatorMapObj.isOperator(value) &&
         operatorMapObj.isOperator(treeNode->value) &&
         operatorMapObj.isStackOperatorHigherPrecedence(treeNode->value, value)) {
-        buildString += '(';
+        //buildString += '(';
         return true;
     }
     return false;
@@ -212,16 +212,29 @@ bool areParensRequired(TreeNodeClass* treeNode, char value) {
 
 void inorder(TreeNodeClass* treeNode) {
     //xxx do in order transversal to build string
-    bool parensRequired = false;
     if (treeNode) {
-        // xxx check if parens required pass arguments treeNode->left, treeNode->value
-        // go left
-        // add value to build string
-        // xxx check if parens required pass arguments treeNode->right, treeNode->value
-        // go right
-        // check if parens required
-        // add ) to buildString
+        // Check if parentheses are required for the left subtree
+        bool leftParensRequired = areParensRequired(treeNode->left, treeNode->value);
 
+        // Go left
+        if (leftParensRequired)
+            buildString += '(';
+        inorder(treeNode->left);
+        if (leftParensRequired)
+            buildString += ')';
+
+        // Add value to build string
+        buildString += treeNode->value;
+
+        // Check if parentheses are required for the right subtree
+        bool rightParensRequired = areParensRequired(treeNode->right, treeNode->value);
+
+        // Go right
+        if (rightParensRequired)
+            buildString += '(';
+        inorder(treeNode->right);
+        if (rightParensRequired)
+            buildString += ')';
     }//if
 }
 
