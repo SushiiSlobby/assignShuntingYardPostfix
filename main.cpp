@@ -1,4 +1,10 @@
-// ShuntingYardTemplateSol.cpp : Defines the entry point for the console application.
+/*
+Program Name: Matrix Vertical Add
+Date: 2023-11-10
+Author: David Vu
+Module Purpose:
+This program implements a stack-based and tree-based implementation of returning infix expressions in postorder and preorder notations.
+*/
 
 #include <iostream>
 #include <fstream>
@@ -9,7 +15,7 @@
 
 using namespace std;
 
-string inputFileNameStr = "expressions.txt";                  // Default location in solution folder
+string inputFileNameStr = "C:\\Users\\wolfe\\CLionProjects\\assignShuntingYardPostfix\\expressions.txt";                  // Default location in solution folder
 
 class OperatorMapClass {
 
