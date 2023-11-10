@@ -1,7 +1,6 @@
 // ShuntingYardTemplateSol.cpp : Defines the entry point for the console application.
 
 #include <iostream>
-#include <iomanip>
 #include <fstream>
 #include <string>
 #include <sstream>
@@ -49,7 +48,7 @@ class ShuntingYardClass {
 
 public:
 
-    string createPostFixFrom(string infixString) {
+    static string createPostFixFrom(const string& infixString) {
 
         string       outputString;
         stack <char> operatorStackObj;
@@ -148,10 +147,10 @@ TreeNodeClass* BuildNewNodeObjPtrMethod(char value) {
     Node->right = nullptr;
 
     return Node;
-};
+}
 
 
-TreeNodeClass* ConstructBET(string postFixStr) {
+TreeNodeClass* ConstructBET(const string& postFixStr) {
     stack<TreeNodeClass*>   parseStack;
     TreeNodeClass*          newNodePtr;
     OperatorMapClass        OperatorMapObj;
@@ -167,7 +166,7 @@ TreeNodeClass* ConstructBET(string postFixStr) {
         if(OperatorMapObj.isOperator(newNodePtr->value))
         {
             // parse stack nodes into a new subtree as children
-            // Save/Add this sub tree node to the stack
+            // Save/Add this subtree node to the stack
             newNodePtr->right = parseStack.top();
             parseStack.pop();
             newNodePtr->left = parseStack.top();
@@ -200,7 +199,6 @@ void preorder(TreeNodeClass* treeNode) {
 }
 
 bool areParensRequired(TreeNodeClass* treeNode, char value) {
-    OperatorMapClass operatorMapObj;
     if (operatorMapObj.isOperator(value) &&
         operatorMapObj.isOperator(treeNode->value) &&
         operatorMapObj.isStackOperatorHigherPrecedence(treeNode->value, value)) {
@@ -260,12 +258,10 @@ int main() {
     string  infixExpressionStr,
             postfixExpressionStr;
 
-    ShuntingYardClass shuntingYardObj;
-
     while (inputFileStreamObj >> infixExpressionStr) {
 
         cout << "InFix   Expression : " << infixExpressionStr << endl;
-        postfixExpressionStr = shuntingYardObj.createPostFixFrom(infixExpressionStr);
+        postfixExpressionStr = ShuntingYardClass::createPostFixFrom(infixExpressionStr);
         cout << "PostFix Expression : " << postfixExpressionStr << endl << endl;
 
         TreeNodeClass* expressionTreeRootPtr = ConstructBET(postfixExpressionStr);
@@ -281,7 +277,7 @@ int main() {
 
         cout << endl << endl;
 
-    };//while
+    }//while
 
     inputFileStreamObj.close();
 
