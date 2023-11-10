@@ -184,7 +184,7 @@ TreeNodeClass* ConstructBET(string postFixStr) {
 
     //  Place formed root node on the stack into tree
 
-    return parseStack.empty() ? nullptr : parseStack.top();
+    return parseStack.top();
 }
 
 string buildString;
@@ -213,23 +213,20 @@ bool areParensRequired(TreeNodeClass* treeNode, char value) {
 void inorder(TreeNodeClass* treeNode) {
     //xxx do in order transversal to build string
     if (treeNode) {
-        // Check if parentheses are required for the left subtree
+        //left
         bool leftParensRequired = areParensRequired(treeNode->left, treeNode->value);
 
-        // Go left
         if (leftParensRequired)
             buildString += '(';
         inorder(treeNode->left);
         if (leftParensRequired)
             buildString += ')';
 
-        // Add value to build string
         buildString += treeNode->value;
 
-        // Check if parentheses are required for the right subtree
+        //right
         bool rightParensRequired = areParensRequired(treeNode->right, treeNode->value);
 
-        // Go right
         if (rightParensRequired)
             buildString += '(';
         inorder(treeNode->right);

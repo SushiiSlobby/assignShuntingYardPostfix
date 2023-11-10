@@ -1,3 +1,10 @@
 a+b*c-d
 A+B*(C-D)
 a*(b+c)-d/e
+((((((A+B*C)-D/E)+F)-((G*H)/((I+J)-K))*L)+(M/N)*O)-(((P*Q)/((R+S)-T*U))*V)/W)+(X*Y)/Z
+(A*B)/C
+((((((a+B*C)-d/E)+f)-((G*h)/((i+J)-k))*L)+(m/N)*o)-(((P*q)/((R+s)-T*U))*V)/W)+(x*Y)/z
+((((((A+B)*(C-D))/(E+F)-G*H)+(((I/(J+K))*(L-M))/N)*O)-P*(Q/(R+S)-(T*U)/V))+W)+(X*Y)/Z
+(((A*B+C)+D*E)-F/G)+H*I
+(((((((((((A/B-C*D)+E/F)-G)+(H*I)/J)-K*L)+(M/N)*O)-P/Q)+R*S)-T/U)+V*W)-X/Y)+Z
+(((((A+B)*C-D/E)/((F+G)*H-(I/J)*(K/L))+M*N)-((O/(P+Q))*(R-S))/(T*U))+V/W)+(X*Y)/Z
