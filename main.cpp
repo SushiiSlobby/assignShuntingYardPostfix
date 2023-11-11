@@ -15,7 +15,7 @@ This program implements a stack-based and tree-based implementation of returning
 
 using namespace std;
 
-string inputFileNameStr = "C:\\Users\\wolfe\\CLionProjects\\assignShuntingYardPostfix\\expressions.txt";                  // Default location in solution folder
+string inputFileNameStr = "expressions.txt";                  // Default location in solution folder
 
 class OperatorMapClass {
 
